@@ -18,8 +18,8 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/api/orders")
-def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
+@router.post("/")
+async def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
     db_order = models.Order(**order.dict())
     db.add(db_order)
     db.commit()
@@ -35,8 +35,8 @@ def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
         "order_time": db_order.order_time.isoformat(),
     }
 
-    # Fire-and-forget async RabbitMQ publish
-    asyncio.create_task(publish_event("order_created", message))
+    # Await the publish_event function
+    await publish_event("order_created", message)
 
     return {"message": "Order received", "order_id": db_order.id}
 
