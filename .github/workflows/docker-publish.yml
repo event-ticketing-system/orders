@@ -22,7 +22,7 @@ jobs:
 
     - name: Build image
       run: |
-        docker build -f Dockerfile -t palani1703/order-srv-frontend:latest .
+        docker build -f Dockerfile -t palani1703/order-srv:latest .
 
     - name: Push frontend image
-      run: docker push palani1703/order-srv-frontend:latest
+      run: docker push palani1703/order-srv:latest
