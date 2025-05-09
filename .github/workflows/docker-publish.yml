@@ -1,0 +1,28 @@
+name: Docker CI
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Debug working directory contents
+      run: ls -la
+
+    - name: Log in to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    - name: Build image
+      run: |
+        docker build -f Dockerfile -t palani1703/order-srv:latest .
+
+    - name: Push frontend image
+      run: docker push palani1703/order-srv:latest
