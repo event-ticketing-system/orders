@@ -18,6 +18,7 @@ def get_db():
     finally:
         db.close()
 
+@router.post("")
 @router.post("/")
 async def create_order(order: schemas.OrderCreate, db: Session = Depends(get_db)):
     db_order = models.Order(**order.dict())
