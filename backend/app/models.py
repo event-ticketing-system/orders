@@ -13,3 +13,5 @@ class Order(Base):
     total_price = Column(Float, nullable=False)
     status = Column(String, default="pending")
     order_time = Column(DateTime, default=datetime.datetime.utcnow)
+    user_id = Column(String, nullable=False)
+    merchant_transaction_id = Column(String, nullable=False)

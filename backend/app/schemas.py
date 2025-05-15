@@ -8,6 +8,7 @@ class OrderCreate(BaseModel):
     price: float
     total_price: float
     order_time: datetime
+    user_id: str
 
 class OrderResponse(OrderCreate):
     id: int

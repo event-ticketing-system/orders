@@ -4,6 +4,8 @@ from app.database import Base, engine
 from app.routes import orders
 from app.consumer import *
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
 
 Base.metadata.create_all(bind=engine)
 
@@ -27,3 +29,8 @@ def root():
 @app.on_event("startup")
 async def startup_event():
     asyncio.create_task(consume_events()) 
+
+@app.get("/", response_class=HTMLResponse)
+async def read_index():
+    with open("./index.html", "r") as file:
+        return file.read()
